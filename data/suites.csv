@@ -1,0 +1,6 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","10172","shows error when credentials are blank","","Mon May 26 02:48:01 GMT+05:00 2025","passed","Mon May 26 02:48:12 GMT+05:00 2025","","Login – edge case","",""
+"","3638","logs out back to login page","","Mon May 26 02:48:23 GMT+05:00 2025","passed","Mon May 26 02:48:26 GMT+05:00 2025","","Logout flow","",""
+"","2346","should login with valid credentials","","Mon May 26 02:48:38 GMT+05:00 2025","passed","Mon May 26 02:48:40 GMT+05:00 2025","","My Login application","",""
+"","2419","shows error for wrong password","","Mon May 26 02:48:16 GMT+05:00 2025","passed","Mon May 26 02:48:18 GMT+05:00 2025","","Login – negative","",""
+"","2867","displays the expected header text after login","","Mon May 26 02:48:31 GMT+05:00 2025","passed","Mon May 26 02:48:33 GMT+05:00 2025","","Secure Area UI","",""
