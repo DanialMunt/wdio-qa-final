@@ -1,0 +1,25 @@
+name: UI-tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  wdio:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4            # pulls your repo
+      - uses: actions/setup-node@v4          # installs Node
+        with:
+          node-version: '20'
+      - run: npm ci                          # installs dev-deps
+      - run: npx wdio run wdio.conf.js       # runs the WDIO tests
+
+      # Optional: upload the HTML report (html-nice-reporter)
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: wdio-report
+          path: ./reports/html-reports       # adjust if your conf uses another dir
