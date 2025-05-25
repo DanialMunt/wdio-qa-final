@@ -19,13 +19,10 @@ jobs:
       # 1) run the tests (creates JSON files)
       - run: npx wdio run wdio.conf.js
 
-      # 2) MERGE all JSONs → a single report.html
-      - name: Merge WDIO reports into HTML
-        run: |
-          npx wdio-html-nice-reporter --merge \
-            --reportDir reports/html-reports \
-            --reportTitle "WDIO Test Report" \
-            --outputFile report.html
+      - name: Merge WDIO JSON into HTML
+        run: npx wdio-html-nice-reporter --merge --reportDir reports/html-reports --outputFile report.html --reportTitle "WDIO Test Report"
+
+      
 
       # 3) Publish that HTML file to GitHub Pages (CD)
       - name: Deploy report to GitHub Pages

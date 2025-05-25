@@ -1,3 +1,5 @@
+const { ReportGenerator, HtmlReporter } = require('wdio-html-nice-reporter');
+let reportAggregator;
 
 exports.config = {
     //
@@ -7,7 +9,7 @@ exports.config = {
     // WebdriverIO supports running e2e tests as well as unit and component tests.
     runner: 'local',
     strictWebDriverCompliance: true,
-   
+
     //
     // ==================
     // Specify Test Files
@@ -55,15 +57,15 @@ exports.config = {
     capabilities: [{
         browserName: 'chrome',
         'goog:chromeOptions': {
-      args: [
-        '--headless',           // run headless (Chrome ≥ 109 flag)
-        '--no-sandbox',             // needed in containers
-        '--disable-gpu',
-        '--disable-dev-shm-usage',
-        // give each CI run its own profile dir:
-        `--user-data-dir=${require('os').tmpdir()}/chrome-${process.pid}`
-      ]
-    }
+            args: [
+                '--headless',           // run headless (Chrome ≥ 109 flag)
+                '--no-sandbox',             // needed in containers
+                '--disable-gpu',
+                '--disable-dev-shm-usage',
+                // give each CI run its own profile dir:
+                `--user-data-dir=${require('os').tmpdir()}/chrome-${process.pid}`
+            ]
+        }
     }],
 
     //
@@ -139,11 +141,36 @@ exports.config = {
     reporters: [
         'spec',
         ['html-nice', {
-            outputDir: 'reports/html-reports',   // <-— path for CI upload
+            outputDir: './reports/html-reports/',   // <-— path for CI upload
             filename: 'report.html',
-            reportTitle: 'WDIO Test Report'
+            reportTitle: 'WDIO Test Report',
+            linkScreenshots: true,
+            //to show the report in a browser when done
+            showInBrowser: true,
+            collapseTests: false,
+            //to turn on screenshots after every test
+            useOnAfterCommandForScreenshot: false
         }]
     ],
+
+    onPrepare: function(config, capabilities) {
+
+    reportAggregator = new ReportGenerator({
+        outputDir: './reports/html-reports/',
+        filename: 'master-report.html',
+        reportTitle: 'Master Report',
+        browserName: capabilities.browserName,
+        collapseTests: true
+    });
+    reportAggregator.clean();
+},
+
+
+onComplete: function (exitCode, config, capabilities, results) {
+    (async () => {
+        await reportAggregator.createReport();
+    })();
+},
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
