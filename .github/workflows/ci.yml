@@ -19,8 +19,14 @@ jobs:
       # 1) run the tests (creates JSON files)
       - run: npx wdio run wdio.conf.js
 
-      - name: Merge WDIO JSON into HTML
-        run: npm run merge-report
+      - name: Generate Allure HTML
+        run: npx allure generate reports/allure-results --clean --output reports/allure-report
+      - name: Deploy Allure report
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: reports/allure-report
+          publish_branch: github-pages
 
       
 

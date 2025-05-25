@@ -115,7 +115,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    // services: [],
+    services: ['chromedriver', ['allure', {}]],
     //
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -140,37 +140,11 @@ exports.config = {
     // see also: https://webdriver.io/docs/dot-reporter
     reporters: [
         'spec',
-        ['html-nice', {
-            outputDir: './reports/html-reports/',   // <-— path for CI upload
-            filename: 'report.html',
-            reportTitle: 'WDIO Test Report',
-            linkScreenshots: true,
-            //to show the report in a browser when done
-            showInBrowser: true,
-            collapseTests: false,
-            //to turn on screenshots after every test
-            useOnAfterCommandForScreenshot: false
-        }]
+         ['allure', { outputDir: 'reports/allure-results' }]
     ],
 
-    onPrepare: function(config, capabilities) {
-
-    reportAggregator = new ReportGenerator({
-        outputDir: './reports/html-reports/',
-        filename: 'master-report.html',
-        reportTitle: 'Master Report',
-        browserName: capabilities.browserName,
-        collapseTests: true
-    });
-    reportAggregator.clean();
-},
 
 
-onComplete: function (exitCode, config, capabilities, results) {
-    (async () => {
-        await reportAggregator.createReport();
-    })();
-},
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
