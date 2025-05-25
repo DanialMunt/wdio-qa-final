@@ -1,4 +1,0 @@
-{
-  "using": "xpath",
-  "value": ".//h2[normalize-space(text()) = \"Secure Area\"] | .//h2[not(.//h2[normalize-space(text()) = \"Secure Area\"]) and normalize-space() = \"Secure Area\"]"
-}
