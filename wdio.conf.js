@@ -50,7 +50,17 @@ exports.config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        browserName: 'chrome'
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+      args: [
+        '--headless=new',           // run headless (Chrome ≥ 109 flag)
+        '--no-sandbox',             // needed in containers
+        '--disable-gpu',
+        '--disable-dev-shm-usage',
+        // give each CI run its own profile dir:
+        `--user-data-dir=/tmp/chrome-data-${Date.now()}`
+      ]
+    }
     }],
 
     //
