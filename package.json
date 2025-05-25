@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "merge-report": "wdio-html-nice-reporter --merge --reportDir reports/html-reports --outputFile report.html --reportTitle \"WDIO Test Report\""
   },
   "keywords": [],
   "author": "",

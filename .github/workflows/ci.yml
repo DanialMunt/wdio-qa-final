@@ -20,7 +20,7 @@ jobs:
       - run: npx wdio run wdio.conf.js
 
       - name: Merge WDIO JSON into HTML
-        run: npx wdio-html-nice-reporter --merge --reportDir reports/html-reports --outputFile report.html --reportTitle "WDIO Test Report"
+        run: npm run merge-report
 
       
 
