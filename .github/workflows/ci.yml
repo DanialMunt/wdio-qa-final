@@ -20,7 +20,7 @@ jobs:
       - run: npx wdio run wdio.conf.js
 
       - name: Generate Allure HTML
-        run: npx allure generate reports/allure-results --clean --output reports/allure-report
+        run: npx allure generate reports/allure-results --output reports/allure-report
       - name: Deploy Allure report
         uses: peaceiris/actions-gh-pages@v4
         with:
