@@ -1,3 +1,4 @@
+
 exports.config = {
     //
     // ====================
@@ -5,6 +6,8 @@ exports.config = {
     // ====================
     // WebdriverIO supports running e2e tests as well as unit and component tests.
     runner: 'local',
+    strictWebDriverCompliance: true,
+   
     //
     // ==================
     // Specify Test Files
@@ -43,7 +46,7 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 1,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -53,12 +56,12 @@ exports.config = {
         browserName: 'chrome',
         'goog:chromeOptions': {
       args: [
-        '--headless=new',           // run headless (Chrome ≥ 109 flag)
+        '--headless',           // run headless (Chrome ≥ 109 flag)
         '--no-sandbox',             // needed in containers
         '--disable-gpu',
         '--disable-dev-shm-usage',
         // give each CI run its own profile dir:
-        `--user-data-dir=/tmp/chrome-data-${Date.now()}`
+        `--user-data-dir=${require('os').tmpdir()}/chrome-${process.pid}`
       ]
     }
     }],
