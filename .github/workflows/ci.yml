@@ -2,24 +2,36 @@ name: UI-tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
 
 jobs:
   wdio:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4            # pulls your repo
-      - uses: actions/setup-node@v4          # installs Node
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm ci                          # installs dev-deps
-      - run: npx wdio run wdio.conf.js       # runs the WDIO tests
+      - run: npm ci
 
-      # Optional: upload the HTML report (html-nice-reporter)
-      - name: Upload HTML report
-        uses: actions/upload-artifact@v4
+      # 1) run the tests (creates JSON files)
+      - run: npx wdio run wdio.conf.js
+
+      # 2) MERGE all JSONs → a single report.html
+      - name: Merge WDIO reports into HTML
+        run: |
+          npx wdio-html-nice-reporter --merge \
+            --reportDir reports/html-reports \
+            --reportTitle "WDIO Test Report" \
+            --outputFile report.html
+
+      # 3) Publish that HTML file to GitHub Pages (CD)
+      - name: Deploy report to GitHub Pages
+        if: ${{ success() }}            # only on green run
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          name: wdio-report
-          path: ./reports/html-reports       # adjust if your conf uses another dir
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: reports/html-reports
+          publish_branch: github-pages
+          keep_files: false
